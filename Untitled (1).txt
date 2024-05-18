@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GunSpin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #gun {
+            width: 200px;
+            height: 100px;
+            background-color: #333;
+            position: relative;
+        }
+        #bullet {
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translate(-50%, -50%);
+            transition: left 2s ease-in-out;
+        }
+        #score {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="gun">
+        <div id="bullet"></div>
+    </div>
+    <div id="score">Score: 0</div>
+
+    <script>
+        let bullet = document.getElementById('bullet');
+        let scoreDisplay = document.getElementById('score');
+        let score = 0;
+        let spinning = false;
+
+        document.getElementById('gun').addEventListener('click', function() {
+            if (!spinning) {
+                spinning = true;
+                let spinTime = Math.random() * 2000 + 1000; // Random spin time between 1 to 3 seconds
+                bullet.style.left = '100%';
+                setTimeout(() => {
+                    spinning = false;
+                    let spinResult = Math.random();
+                    if (spinResult < 0.25) {
+                        score += 100;
+                        alert('Perfect shot! You scored 100 points!');
+                    } else if (spinResult < 0.5) {
+                        score += 50;
+                        alert('Great shot! You scored 50 points!');
+                    } else if (spinResult < 0.75) {
+                        score += 25;
+                        alert('Good shot! You scored 25 points!');
+                    } else {
+                        alert('Oops! You missed!');
+                    }
+                    scoreDisplay.textContent = 'Score: ' + score;
+                    bullet.style.left = '0';
+                }, spinTime);
+            }
+        });
+    </script>
+</body>
+</html>
